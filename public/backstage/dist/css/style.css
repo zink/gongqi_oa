@@ -1,0 +1,32 @@
+.pagination input{
+      float: left;
+      width: 40px!important;
+      text-align: center;
+      height: auto;
+      padding: 6px 0;
+      border-left: none;
+      border-right: none;
+      font-weight: 400;
+      color: #333;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+      border-bottom: 1px solid #ddd;
+      box-shadow: none;
+}
+.fixed-action-bar{
+    height:55px;
+}
+.fixed-action-bar-inner{
+    padding:10px;
+}
+.fixed-action-bar.fixed .fixed-action-bar-inner{
+    position:fixed;
+    top:50px;
+    left:245px;
+    right:15px;
+    background-color:rgba(255,255,255,0.8);
+    z-index:10;
+}
+.sidebar-collapse .fixed-action-bar .fixed-action-bar-inner{
+    left:65px;
+}
