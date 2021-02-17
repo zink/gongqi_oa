@@ -67,7 +67,7 @@ class OrderController extends ControllerBase {
         if(!$data['items'] || empty($data['items'])){
             return $this->error('没有产品');
         }
-        $worker = \Worker::findFirst($data['worker_id']?$data['worker_id']:$this->account['id']));
+        $worker = \Worker::findFirst($data['worker_id']?$data['worker_id']:$this->account['id']);
         if(!$worker){
             return $this->error('员工非法');
         }
@@ -87,7 +87,6 @@ class OrderController extends ControllerBase {
         $order->end_time = $data['end_time'];
         $items = [];
         foreach($data['items'] as $idcId=>$products){
-            
             $idc = \Idc::findFirst($idcId);
             foreach($products as $key=>$item){
                 $orderItem = new \OrderItem();
