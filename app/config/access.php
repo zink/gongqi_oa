@@ -94,6 +94,10 @@ return new \Phalcon\Config([
                         'title'=>'编辑销售订单',
                     ],
                     [
+                        'action'=>'all',
+                        'title'=>'查看全部订单',
+                    ],
+                    [
                         'action'=>'new_order',
                         'title'=>'建单',
                     ],

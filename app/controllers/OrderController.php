@@ -1,12 +1,23 @@
 <?php
+use \Component\FunctionExtension as Fex;
 use Phalcon\Paginator\Adapter\QueryBuilder;
 class OrderController extends ControllerBase {
     public function indexAction(){
-        $builder = $this->modelsManager
-            ->createBuilder()
-            ->columns("*")
-            ->from('Orders')
-            ->orderBy("create_time desc");
+        $fex = new Fex();
+        if($fex->permission('order-all')){
+            $builder = $this->modelsManager
+                ->createBuilder()
+                ->columns("*")
+                ->from('Orders')
+                ->orderBy("create_time desc");
+        }else{
+            $builder = $this->modelsManager
+                ->createBuilder()
+                ->columns("*")
+                ->from('Orders')
+                ->where('worker_id = '.$this->account['id'])
+                ->orderBy("create_time desc");
+        }
 
         $paginator = new QueryBuilder([
             "builder" => $builder,
