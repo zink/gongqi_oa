@@ -16,7 +16,7 @@ class IndexController extends ControllerBase {
             ]);
         }else{
             $this->view->total = \Orders::sum([
-                'conditions'=>$conditions->conditions,
+                'conditions'=>'worker_id ='.$this->account['id']
                 'column'=>'total'
             ]);
         };

@@ -18,7 +18,7 @@ class OpportunityController extends ControllerBase {
                 $req->setFields('worker_id',$worker);
             }
         }else{
-            $req->setFields('worker_id',$this->account['worker']);
+            $req->setFields('worker_id',$this->account['id']);
         }
         $req->setFields('page',$this->page);
         $req->setFields('limit',50);
