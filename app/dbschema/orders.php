@@ -30,6 +30,17 @@ $db['orders'] = [
             'default' => 0,
             'comment' => '客户ID'
         ],
+        'bill_type' => [ 
+            'type' => [
+                'year'=>'年付',
+                'half_year'=>'半年付',
+                'three_month'=>'季付',
+                'month'=>'月付'
+            ],
+            'default'=>'year',
+            'required' => true,
+            'comment' => '付费方式',
+        ],
         'total' => [
             'type' => 'money',
             'required' => true,

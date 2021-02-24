@@ -72,6 +72,29 @@
             </div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">
+                    收费方式
+                </label>
+                <div class="col-sm-6 clearfix">
+                    <div class="icheck-primary d-inline">
+                        <input type="radio" id="year" name="bill_type" v-model="bill_type" value="year">
+                        <label for="year">一年付</label>
+                    </div>
+                    <div class="icheck-primary d-inline">
+                        <input type="radio" id="half_year" name="bill_type" v-model="bill_type" value="half_year" checked="">
+                        <label for="half_year">半年付</label>
+                    </div>
+                    <div class="icheck-primary d-inline">
+                        <input type="radio" id="three_month" name="bill_type" v-model="bill_type" value="three_month" checked="">
+                        <label for="three_month">季付</label>
+                    </div>
+                    <div class="icheck-primary d-inline">
+                        <input type="radio" id="month" name="bill_type" v-model="bill_type" value="month" checked="">
+                        <label for="month">月付</label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label">
                     开票信息
                 </label>
                 <div class="col-sm-6">
@@ -231,6 +254,7 @@
             opening_time:0,
             billing_time:0,
             end_time:0,
+            bill_type:'year',
             remark:''
         },
         computed:{
@@ -430,6 +454,7 @@
                         'opening_time':self.opening_time,
                         'billing_time':self.billing_time,
                         'end_time':self.end_time,
+                        'bill_type':self.bill_type,
                         'items':self.orderItem,
                         'remark':self.remark
                     },

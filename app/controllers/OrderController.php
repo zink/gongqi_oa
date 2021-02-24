@@ -96,6 +96,7 @@ class OrderController extends ControllerBase {
         $order->opening_time = $data['opening_time'];
         $order->billing_time = $data['billing_time'];
         $order->end_time = $data['end_time'];
+        $order->bill_type = $data['bill_type'];
         $items = [];
         foreach($data['items'] as $idcId=>$products){
             $idc = \Idc::findFirst($idcId);
