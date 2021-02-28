@@ -23,6 +23,15 @@ $db['order_bill'] = array(
             'required' => true,
             'comment' => '账单支付状态',
         ),
+        'status' => [ 
+            'type' => [
+                'pending'=>'待确认',
+                'finish'=>'已完成'
+            ],
+            'default'=>'pending',
+            'required' => true,
+            'comment' => '财务确认状态',
+        ],
         'contract'=>[
             'type' => 'varchar(200)',
             'required' => true,

@@ -54,6 +54,7 @@ class OrderController extends ControllerBase {
             $newFile = $path.$imageName;
             $image->moveTo($newFile);
             $bill->contract = $imageName;
+            $bill->pay_status = 'payed';
             if($bill->save()){
                 $this->end(true);
                 return $this->success('上传成功');

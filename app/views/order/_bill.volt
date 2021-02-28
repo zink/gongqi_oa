@@ -26,7 +26,15 @@
                 ￥<%item.total%>
             </td>
             <td>
-                <button v-if="item.contract != ''" class="btn btn-default btn-xs" @click.stop.prevent="showContract(item.id)">查看付款凭证</button>
+                <template v-if="item.contract != ''">
+                    <span v-if="item.status == 'pending'" class="badge badge-warning">
+                        未确认
+                    </span>
+                    <span v-if="item.status == 'finish'" class="badge badge-success">
+                        已确认
+                    </span>
+                    <button class="btn btn-default btn-xs" @click.stop.prevent="showContract(item.id)">查看付款凭证</button>
+                </template>
                 <button v-else class="btn btn-primary btn-xs" @click.stop.prevent="submitBill(item.id)">确认付款</button>
             </td>
         </tr>
