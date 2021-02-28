@@ -7,9 +7,18 @@
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-7">
+                            <a href="{{url('order')}}" type="button" class="btn btn-default btn-sm" >
+                                全部订单
+                            </a>
                         </div>
                         <div class="col-sm-5">
                             <div class="input-group input-group-sm">
+                            {{search([
+                                'url':'order/index/',
+                                'menu':[
+                                    '订单号':"id"
+                                ]
+                            ])}}
                             </div>
                         </div>
                     </div>

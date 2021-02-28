@@ -160,7 +160,11 @@ class CustomerController extends ControllerBase {
         if($this->request->hasFiles()){
             $image = current($this->request->getUploadedFiles());
             $imageName = md5(rand(0, 9999).$file.microtime()).'.'.$image->getExtension();
-            $newFile = $this->config->application->attachmentDir.$imageName;
+            $path = $this->config->application->attachmentDir.'customer/'.$id.'/';
+            if(!file_exists($path)){
+                mkdir($path,0755,true);
+            }
+            $newFile = $path.$imageName;
             $image->moveTo($newFile);
             $customerAttachment = \CustomerAttachment::findFirst('customer_id = '.$id);
             if(!$customerAttachment){
@@ -186,10 +190,10 @@ class CustomerController extends ControllerBase {
             }
         }
     }
-    public function attachmentAction(){
+    public function attachmentAction($id = null){
         $imageName = $this->request->get('download');
-        $path = $this->config->application->attachmentDir.$imageName;
-        if(!file_exists($path)){
+        $path = $this->config->application->attachmentDir.'customer/'.$id.'/'.$imageName;
+        if(!file_exists($path) || !$id){
             $path = $this->config->application->attachmentDir.'blank.png';
         }
         $ext = pathinfo($path)['extension'];

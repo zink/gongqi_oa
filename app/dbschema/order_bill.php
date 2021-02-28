@@ -23,6 +23,12 @@ $db['order_bill'] = array(
             'required' => true,
             'comment' => '账单支付状态',
         ),
+        'contract'=>[
+            'type' => 'varchar(200)',
+            'required' => true,
+            'default' => '',
+            'comment' => '支付凭证' ,
+        ],
         'billing_time' => [
             'type' => 'time',
             'comment' => '计费开始时间',

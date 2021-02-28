@@ -24,6 +24,12 @@ $db['orders'] = [
             'default'=>'',
             'comment' => '姓名',
         ],
+        'contract'=>[
+            'type' => 'varchar(200)',
+            'required' => true,
+            'default' => '',
+            'comment' => '合同照片' ,
+        ],
         'customer_id' => [
             'type' => 'number',
             'required' => true,

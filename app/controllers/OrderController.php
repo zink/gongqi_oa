@@ -3,12 +3,19 @@ use \Component\FunctionExtension as Fex;
 use Phalcon\Paginator\Adapter\QueryBuilder;
 class OrderController extends ControllerBase {
     public function indexAction(){
+        $id = $this->request->get('id');
+        if($id){
+            $where = 'id = '.$id;
+        }else{
+            $where = '1=1';
+        }
         $fex = new Fex();
         if($fex->permission('order-all')){
             $builder = $this->modelsManager
                 ->createBuilder()
                 ->columns("*")
                 ->from('Orders')
+                ->where($where)
                 ->orderBy("create_time desc");
         }else{
             $builder = $this->modelsManager
@@ -16,6 +23,7 @@ class OrderController extends ControllerBase {
                 ->columns("*")
                 ->from('Orders')
                 ->where('worker_id = '.$this->account['id'])
+                ->andWhere($where)
                 ->orderBy("create_time desc");
         }
 
@@ -28,6 +36,114 @@ class OrderController extends ControllerBase {
         $paginator = $paginator->getPaginate();
         $paginator->items = $paginator->items->toArray();
         $this->view->orders = json_decode(json_encode($paginator),1);
+    }
+    public function upload_bill_payAction($id){
+        $this->begin();
+        $bill = \OrderBill::findFirst($id);
+        if(!$bill){
+            $this->end(false);
+            return $this->error('上传失败');
+        }
+        if($this->request->hasFiles()){
+            $image = current($this->request->getUploadedFiles());
+            $imageName = md5(rand(0, 9999).$file.microtime()).'.'.$image->getExtension();
+            $path = $this->config->application->attachmentDir.'orders/'.$bill->order_id.'/bills/'.$id.'/';
+            if(!file_exists($path)){
+                mkdir($path,0755,true);
+            }
+            $newFile = $path.$imageName;
+            $image->moveTo($newFile);
+            $bill->contract = $imageName;
+            if($bill->save()){
+                $this->end(true);
+                return $this->success('上传成功');
+            }else{
+                $this->end(false);
+                return $this->error('上传失败');
+            }
+        }else{
+            $this->end(false);
+            return $this->error('上传失败');
+        }
+    }
+    public function bill_attachmentAction($id = null){
+        $bill = \OrderBill::findFirst($id);
+        if(!$bill){
+            $path = $this->config->application->attachmentDir.'blank.png';
+        }else{
+            $path = $this->config->application->attachmentDir.'orders/'.$bill->order_id.'/bills/'.$id.'/'.$bill->contract;
+            if(!file_exists($path)){
+                $path = $this->config->application->attachmentDir.'blank.png';
+            }
+        }
+        $ext = pathinfo($path)['extension'];
+        $image = fread(fopen($path,'rb'),filesize($path));
+        switch($ext){
+            case 'gif':
+                $this->response->setHeader('Content-Type', 'image/gif');
+            break;
+            case 'png':
+                $this->response->setHeader('Content-Type', 'image/png');
+            break;
+            default:
+                $this->response->setHeader('Content-Type', 'image/jpeg');
+            break;
+        }
+        return $this->response->setContent($image);
+    }
+    public function contractAction($id){
+        $this->begin();
+        $order = \Orders::findFirst($id);
+        if(!$order){
+            $this->end(false);
+            return $this->error('上传失败');
+        }
+        if($this->request->hasFiles()){
+            $image = current($this->request->getUploadedFiles());
+            $imageName = md5(rand(0, 9999).$file.microtime()).'.'.$image->getExtension();
+            $path = $this->config->application->attachmentDir.'orders/'.$id.'/';
+            if(!file_exists($path)){
+                mkdir($path,0755,true);
+            }
+            $newFile = $path.$imageName;
+            $image->moveTo($newFile);
+            $order->contract = $imageName;
+            if($order->save()){
+                $this->end(true);
+                return $this->success('上传成功');
+            }else{
+                $this->end(false);
+                return $this->error('上传失败');
+            }
+        }else{
+            $this->end(false);
+            return $this->error('上传失败');
+        }
+    }
+    public function attachmentAction($id = null){
+        $order = \Orders::findFirst($id);
+        if(!$order){
+            $path = $this->config->application->attachmentDir.'blank.png';
+        }else{
+            $path = $this->config->application->attachmentDir.'orders/'.$id.'/'.$order->contract;
+            if(!file_exists($path)){
+                $path = $this->config->application->attachmentDir.'blank.png';
+            }
+        }
+        $ext = pathinfo($path)['extension'];
+        $image = fread(fopen($path,'rb'),filesize($path));
+        switch($ext){
+            case 'gif':
+                $this->response->setHeader('Content-Type', 'image/gif');
+            break;
+            case 'png':
+                $this->response->setHeader('Content-Type', 'image/png');
+            break;
+            default:
+                $this->response->setHeader('Content-Type', 'image/jpeg');
+            break;
+        }
+        return $this->response->setContent($image);
     }
     public function editAction($id=null){
         if($id){

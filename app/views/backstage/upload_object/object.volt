@@ -28,7 +28,7 @@ var config{{id}} =
                 }
                 if(self.types){
                     for(var i = 0;i<self.types.length;i++){
-                        var match = new RegExp(types[i]);
+                        var match = new RegExp(self.types[i]);
                         if(fileObj['type'].match(match)){
                             return data.submit();
                         }

@@ -4,7 +4,7 @@
     </div>
     <div class="card-body">
         <div class="image-box" style="width:200px;">
-            <img v-if="imageSrc" :src="imageSrc" class="img-thumbnail">
+            <img v-if="imageSrc != ''" :src="imageSrc" class="img-thumbnail">
         </div>
     </div>
     <div class="card-footer">

@@ -11,6 +11,17 @@
     </div>
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">
+            合同
+        </label>
+        <div class="col-sm-6">
+            <upload-object 
+                url="{{url('order/contract/'~order['id'])}}"
+                image="{{order['contract']?url('order/attachment/'~order['id']~'?download=1'):''}}"
+            ></upload-object>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">
             开通时间
         </label>
         <div class="col-sm-6">
@@ -263,7 +274,7 @@
 </div>
 <script>
 (function(){
-    var ipEdit = new Vue({
+    new Vue({
         el:'#J_order_basic',
         delimiters:['<%','%>'],
         data:{

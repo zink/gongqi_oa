@@ -40,7 +40,7 @@
         <div class="col-sm-6">
             <upload-object 
                 url="{{url('customer/upload/license/'~customer['id'])}}"
-                image="{{attachment.license?url('customer/attachment?download='~attachment.license):'about:blank'}}"
+                image="{{attachment.license?url('customer/attachment/'~customer['id']~'?download='~attachment.license):''}}"
             ></upload-object>
         </div>
     </div>
@@ -52,14 +52,14 @@
         <div class="col-sm-3">
             <upload-object 
                 url="{{url('customer/upload/legal_person_front/'~customer['id'])}}" 
-                image="{{attachment.legal_person_front?url('customer/attachment?download='~attachment.legal_person_front):'about:blank'}}"
+                image="{{attachment.legal_person_front?url('customer/attachment/'~customer['id']~'?download='~attachment.legal_person_front):''}}"
                 title="身份证正面"
             ></upload-object>
         </div>
         <div class="col-sm-3">
             <upload-object
                 url="{{url('customer/upload/legal_person_back/'~customer['id'])}}"
-                image="{{attachment.legal_person_back?url('customer/attachment?download='~attachment.legal_person_back):'about:blank'}}"
+                image="{{attachment.legal_person_back?url('customer/attachment/'~customer['id']~'?download='~attachment.legal_person_back):''}}"
                 title="身份证反面"
             ></upload-object>
         </div>
@@ -72,14 +72,14 @@
         <div class="col-sm-3">
             <upload-object 
                 url="{{url('customer/upload/contacts_front/'~customer['id'])}}" 
-                image="{{attachment.contacts_front?url('customer/attachment?download='~attachment.contacts_front):'about:blank'}}"
+                image="{{attachment.contacts_front?url('customer/attachment/'~customer['id']~'?download='~attachment.contacts_front):''}}"
                 title="身份证正面"
             ></upload-object>
         </div>
         <div class="col-sm-3">
             <upload-object 
                 url="{{url('customer/upload/contacts_back/'~customer['id'])}}" 
-                image="{{attachment.contacts_back?url('customer/attachment?download='~attachment.contacts_back):'about:blank'}}"
+                image="{{attachment.contacts_back?url('customer/attachment/'~customer['id']~'?download='~attachment.contacts_back):''}}"
                 title="身份证反面"
             ></upload-object>
         </div>
