@@ -204,7 +204,7 @@
                 {%if permission('bill-all')%}
                 <li class="nav-item has-treeview">
                     <a href="{{url('bill')}}" data-event='true' class="nav-link">
-                        <i class="nav-icon fas fa-upload"></i>
+                        <i class="nav-icon fas fa-sticky-note"></i>
                         <p>
                             账单列表
                         </p>
