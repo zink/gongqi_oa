@@ -33,7 +33,7 @@
                     <span v-if="item.status == 'finish'" class="badge badge-success">
                         已确认
                     </span>
-                    <button class="btn btn-default btn-xs" @click.stop.prevent="showContract(item.id)">查看付款凭证</button>
+                    <a href="javascript:;" data-event @click.stop.prevent="showContract(item.id)">查看付款凭证</a>
                 </template>
                 <button v-else class="btn btn-primary btn-xs" @click.stop.prevent="submitBill(item.id)">确认付款</button>
             </td>
@@ -69,7 +69,7 @@
 </script>
 <script type="text/template" id="J_show_bill_contract">
 <div class="modal fade">
-    <div class="modal-dialog modal-">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -105,7 +105,9 @@
         methods:{
             'showContract':function(id){
                 var modal = $($('#J_show_bill_contract').text()).appendTo($('body'));
-                modal.modal('show').find('img').prop('src',"{{url('order/bill_attachment/')}}"+id+'?download=1');
+                modal.modal('show').on('hidden.bs.modal',function(){
+                    modal.remove();
+                }).find('img').prop('src',"{{url('order/bill_attachment/')}}"+id+'?download=1');
             },
             'submitBill':function(id){
                 var modal = $($('#J_upload_pay').text()).appendTo($('body'));

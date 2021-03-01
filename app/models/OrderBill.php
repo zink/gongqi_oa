@@ -10,4 +10,13 @@ class OrderBill extends \BaseModel{
         parent::initialize();
         $this->belongsTo('order_id', 'Orders', 'id');
     }
+    public function validation(){
+        if($this->status == 'finish' && $this->pay_status != 'payed'){
+            $message = new Message(
+                "状态非法"
+            );
+            $this->appendMessage($message);
+            return false;
+        }
+    }
 }

@@ -201,12 +201,22 @@
                 <li class="nav-header">
                     财务管理
                 </li>
-                {%if permission('receivable-index')%}
+                {%if permission('bill-all')%}
                 <li class="nav-item has-treeview">
-                    <a href="{{url('receivable')}}" data-event='true' class="nav-link">
+                    <a href="{{url('bill')}}" data-event='true' class="nav-link">
                         <i class="nav-icon fas fa-upload"></i>
                         <p>
-                            应收
+                            账单列表
+                        </p>
+                    </a>
+                </li>
+                {%endif%}
+                {%if permission('bill-confirm')%}
+                <li class="nav-item has-treeview">
+                    <a href="javascript:;" data-event='true' class="nav-link">
+                        <i class="nav-icon fas fa-sticky-note"></i>
+                        <p>
+                            待确收账单
                         </p>
                     </a>
                 </li>
@@ -216,7 +226,7 @@
                     <a href="javascript:;" data-event='true' class="nav-link">
                         <i class="nav-icon fas fa-sticky-note"></i>
                         <p>
-                            实收
+                            实收账单
                         </p>
                     </a>
                 </li>

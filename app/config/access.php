@@ -146,10 +146,16 @@ return new \Phalcon\Config([
         'finance'=>[
             'title'=>'财务管理',
             'actions'=>[
-                'receivable'=>[
+                'bill'=>[
                     [
-                        'action'=>'index',
-                        'title'=>'应收'
+                        'action'=>'all',
+                        'title'=>'账单列表'
+                    ]
+                ],
+                'bill'=>[
+                    [
+                        'action'=>'confirm',
+                        'title'=>'待确收'
                     ]
                 ],
                 'paid'=>[

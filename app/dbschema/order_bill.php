@@ -40,11 +40,33 @@ $db['order_bill'] = array(
         ],
         'billing_time' => [
             'type' => 'time',
+            'required' => true,
+            'default'=>0,
             'comment' => '计费开始时间',
         ],
         'end_time' => [
             'type' => 'time',
+            'required' => true,
+            'default'=>0,
             'comment' => '计费结束时间',
+        ],
+        'finish_time' => [
+            'type' => 'time',
+            'required' => true,
+            'default'=>0,
+            'comment' => '确收时间',
+        ],
+        'finish_worker' => [
+            'type' => 'number',
+            'required' => true,
+            'default' => 0,
+            'comment' => '确收员工'
+        ],
+        'finish_worker_name' => [
+            'type' => 'varchar(20)',
+            'required' => false,
+            'default'=>'',
+            'comment' => '确收员工姓名'
         ],
         'total' => [
             'type' => 'money',
@@ -58,6 +80,21 @@ $db['order_bill'] = array(
         'index_order_id'=>array(
             'columns' => array(
                 0 => 'order_id',
+            ),
+        ),
+        'index_billing_time'=>array(
+            'columns' => array(
+                0 => 'billing_time',
+            ),
+        ),
+        'index_end_time'=>array(
+            'columns' => array(
+                0 => 'end_time',
+            ),
+        ),
+        'index_finish_time'=>array(
+            'columns' => array(
+                0 => 'finish_time',
             ),
         ),
     )
