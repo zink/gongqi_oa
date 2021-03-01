@@ -1,24 +1,12 @@
 <!-- Content Header (Page header) -->
-{{content_header(['title':'账单列表'])}}
+{{content_header(['title':'已确收账单'])}}
 {{content_body()}}
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <div class="row">
-                        <div class="col-sm-7">
-                            <div class="btn-group">
-                            <a href="{{url('bill')}}" type="button" class="btn btn-default btn-sm" >
-                                全部账单
-                            </a>
-                            <a href="javascript:search('status','pending');" type="button" class="btn btn-default btn-sm" >
-                                待确收账单
-                            </a>
-                            <a href="javascript:search('status','finish');" type="button" class="btn btn-default btn-sm" >
-                                实收账单
-                            </a>
-                            </div>
-                        </div>
+                        <div class="col-sm-7"></div>
                         <div class="col-sm-5">
                             <div class="input-group input-group-sm">
                             {{search([

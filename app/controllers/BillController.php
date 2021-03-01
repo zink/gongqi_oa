@@ -3,12 +3,56 @@ use \Component\FunctionExtension as Fex;
 use Phalcon\Paginator\Adapter\QueryBuilder;
 class BillController extends ControllerBase {
     public function indexAction(){
+        $status = $this->request->get('status');
         $fex = new Fex();
         if($fex->permission('bill-all')){
             $builder = $this->modelsManager
                 ->createBuilder()
                 ->columns("*")
                 ->from('OrderBill')
+                ->orderBy("billing_time asc");
+            if($status == 'finish'){
+                $builder->andWhere("status = 'finish'");
+            }elseif($status == 'pending'){
+                $builder->andWhere("status = 'pending'");
+                $builder->andWhere("pay_status = 'payed'");
+            }
+            $paginator = new QueryBuilder([
+                "builder" => $builder,
+                "limit" => $this->limit,
+                "page" => $this->page
+            ]);
+            $paginator = $paginator->getPaginate();
+            $this->view->bills = $paginator;
+        }
+    }
+    public function bill_confirmAction(){
+        $fex = new Fex();
+        if($fex->permission('billling-confirm')){
+            $builder = $this->modelsManager
+                ->createBuilder()
+                ->columns("*")
+                ->from('OrderBill')
+                ->andWhere("status = 'pending'")
+                ->andWhere("pay_status = 'payed'")
+                ->orderBy("billing_time asc");
+            $paginator = new QueryBuilder([
+                "builder" => $builder,
+                "limit" => $this->limit,
+                "page" => $this->page
+            ]);
+            $paginator = $paginator->getPaginate();
+            $this->view->bills = $paginator;
+        }
+    }
+    public function bill_finishAction(){
+        $fex = new Fex();
+        if($fex->permission('billling-confirm')){
+            $builder = $this->modelsManager
+                ->createBuilder()
+                ->columns("*")
+                ->from('OrderBill')
+                ->andWhere("status = 'finish'")
                 ->orderBy("billing_time asc");
             $paginator = new QueryBuilder([
                 "builder" => $builder,

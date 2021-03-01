@@ -150,17 +150,13 @@ return new \Phalcon\Config([
                     [
                         'action'=>'all',
                         'title'=>'账单列表'
-                    ]
-                ],
-                'bill'=>[
+                    ],
                     [
                         'action'=>'confirm',
                         'title'=>'待确收'
-                    ]
-                ],
-                'paid'=>[
+                    ],
                     [
-                        'action'=>'index',
+                        'action'=>'finish',
                         'title'=>'实收'
                     ]
                 ],

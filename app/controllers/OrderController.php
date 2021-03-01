@@ -4,18 +4,12 @@ use Phalcon\Paginator\Adapter\QueryBuilder;
 class OrderController extends ControllerBase {
     public function indexAction(){
         $id = $this->request->get('id');
-        if($id){
-            $where = 'id = '.$id;
-        }else{
-            $where = '1=1';
-        }
         $fex = new Fex();
         if($fex->permission('order-all')){
             $builder = $this->modelsManager
                 ->createBuilder()
                 ->columns("*")
                 ->from('Orders')
-                ->where($where)
                 ->orderBy("create_time desc");
         }else{
             $builder = $this->modelsManager
@@ -23,8 +17,10 @@ class OrderController extends ControllerBase {
                 ->columns("*")
                 ->from('Orders')
                 ->where('worker_id = '.$this->account['id'])
-                ->andWhere($where)
                 ->orderBy("create_time desc");
+        }
+        if($id){
+            $builder->andWhere('id = '.$id);
         }
 
         $paginator = new QueryBuilder([

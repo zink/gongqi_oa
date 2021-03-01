@@ -213,7 +213,7 @@
                 {%endif%}
                 {%if permission('bill-confirm')%}
                 <li class="nav-item has-treeview">
-                    <a href="javascript:;" data-event='true' class="nav-link">
+                    <a href="{{url('bill/bill_confirm')}}" data-event='true' class="nav-link">
                         <i class="nav-icon fas fa-sticky-note"></i>
                         <p>
                             待确收账单
@@ -221,9 +221,9 @@
                     </a>
                 </li>
                 {%endif%}
-                {%if permission('paid-index')%}
+                {%if permission('bill-finish')%}
                 <li class="nav-item has-treeview">
-                    <a href="javascript:;" data-event='true' class="nav-link">
+                    <a href="{{url('bill/bill_finish')}}" data-event='true' class="nav-link">
                         <i class="nav-icon fas fa-sticky-note"></i>
                         <p>
                             实收账单
