@@ -51,7 +51,9 @@
                             <td>
                                 {{item.orders.subject}}
                                 <br />
-                                {{item.orders.id}}
+                                <a href="{{url('bill/show_order/'~item.orders.id)}}" data-event="show-order">
+                                    {{item.orders.id}}
+                                </a>
                             </td>
                             <td>
                                 {{item.orders.worker_name}}
@@ -139,6 +141,19 @@
 </script>
 <script>
 (function(){
+    $('[data-event="show-order"]').on('click',function(e){
+        e.preventDefault();
+        var $el = $(this);
+        $.ajax({
+            url:$el.prop('href'),
+            success:function(re){
+                var modal = $(re).appendTo($('body'));
+                modal.modal('show').on('hidden.bs.modal',function(){
+                    modal.remove();
+                });
+            }
+        });
+    });
     $('[data-event="show-contract"]').on('click',function(e){
         e.preventDefault();
         var modal = $($('#J_show_bill_contract').text()).appendTo($('body'));

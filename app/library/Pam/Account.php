@@ -24,12 +24,19 @@ class Account
         $messages = $validation->validate(['username'=>$account,'password'=>$password]);
         if (count($messages)) {
             foreach ($messages as $message) {
-                throw new \Exception($message);
+                throw new \Phalcon\Exception($message);
             }
         }
 
         $pamWorker = new \PamWorker();
         $worker = $pamWorker->checkLogin($account, $password);
+        if(!$worker){
+            $messages = $pamWorker->getMessages();
+            foreach ($messages as $item) {
+                $msg .= $item;
+            }
+            throw new \Phalcon\Exception($msg);
+        }
         $worker = $worker->toArray();
         if($worker['id']){
             $worker['username'] = $account;

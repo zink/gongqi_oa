@@ -4,6 +4,7 @@ use Phalcon\Paginator\Adapter\QueryBuilder;
 class BillController extends ControllerBase {
     public function indexAction(){
         $status = $this->request->get('status');
+        $id = $this->request->get('id');
         $fex = new Fex();
         if($fex->permission('bill-all')){
             $builder = $this->modelsManager
@@ -16,6 +17,9 @@ class BillController extends ControllerBase {
             }elseif($status == 'pending'){
                 $builder->andWhere("status = 'pending'");
                 $builder->andWhere("pay_status = 'payed'");
+            }
+            if($id){
+                $builder->andWhere("order_id = ".$id);
             }
             $paginator = new QueryBuilder([
                 "builder" => $builder,
@@ -89,6 +93,19 @@ class BillController extends ControllerBase {
                 $msg .= $message;
             }
             return $this->error($msg);
+        }
+    }
+    public function show_orderAction($orderId = null){
+        $fex = new Fex();
+        if($fex->permission('finance')){
+            $order = \Orders::findFirst($orderId);
+            $this->view->order = $orderArray = $order->toDetailArray();
+            $total = 0;
+            foreach($orderArray['items'] as $item){
+                $total += $item['price'] * $item['month'] * $item['num'];
+            }
+            $this->view->normalTotal = $total;
+            $this->view->pick('bill/_show_order');
         }
     }
 }

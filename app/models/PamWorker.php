@@ -3,6 +3,7 @@ use Phalcon\Security;
 use Phalcon\Validation;
 use Phalcon\Validation\Validator\Uniqueness;
 use Phalcon\Validation\Validator\InclusionIn;
+use Phalcon\Mvc\Model\Message as Message;
 class PamWorker extends \BaseModel{
     public $id;
     public $worker_id;
@@ -44,16 +45,28 @@ class PamWorker extends \BaseModel{
             'bind' => array('login_account' => $account)
         ));
         if(!$account){
-            throw new \Exception('用户名或密码错误');
+            $message = new Message(
+                "用户名或密码错误"
+            );
+            $this->appendMessage($message);
+            return false;
         }
         $worker = $account->worker;
         $security =  new Security();
         if($worker->disabled == 'true'){
-            throw new \Exception('该账号已禁止登录');
+            $message = new Message(
+                "该账号已禁止登录"
+            );
+            $this->appendMessage($message);
+            return false;
         }
         if (!$security->checkHash($password, $worker->password)) {
             $security->hash(rand());
-            throw new \Exception('用户名或密码错误');
+            $message = new Message(
+                "用户名或密码错误"
+            );
+            $this->appendMessage($message);
+            return false;
         }
         return $worker;
     }
