@@ -6,7 +6,7 @@ var config{{id}} =
     delimiters:['<%','%>'],
     template:`{{partial('backstage/upload_object/template')}}`,
     {%if mode == 'component'%}
-    props:['title','url','types','image'],
+    props:['title','url','types','image','multiple'],
     {%endif%}
     data:function(){
         return {

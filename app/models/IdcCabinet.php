@@ -48,17 +48,19 @@ class IdcCabinet extends \BaseModel{
                 return false;
             }
             $stock = $this->getSnapshotData()['stock'] - $this->stock;
-            $cabinetStock = \IdcCabinetStock::find([
-                "conditions"=>"idc_cabinet_id = ".$this->id." and used = 'false'",
-                "limit"=>$stock
-            ]);
-            foreach($cabinetStock as $key=>$item){
-                if(!$item->delete()){
-                    $message = new Message(
-                        "删除库存失败"
-                    );
-                    $this->appendMessage($message);
-                    return false;
+            if($stock>0){
+                $cabinetStock = \IdcCabinetStock::find([
+                    "conditions"=>"idc_cabinet_id = ".$this->id." and used = 'false'",
+                    "limit"=>$stock
+                ]);
+                foreach($cabinetStock as $key=>$item){
+                    if(!$item->delete()){
+                        $message = new Message(
+                            "删除库存失败"
+                        );
+                        $this->appendMessage($message);
+                        return false;
+                    }
                 }
             }
         }

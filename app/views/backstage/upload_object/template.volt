@@ -8,6 +8,7 @@
         </div>
     </div>
     <div class="card-footer">
-        <input type="file" ref="upload_btn" :data-url="url"/>
+        <input v-if="multiple" type="file" multiple="multiple" ref="upload_btn" :data-url="url" />
+        <input v-else type="file" ref="upload_btn" :data-url="url" />
     </div>
 </div>

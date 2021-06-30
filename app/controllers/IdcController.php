@@ -109,7 +109,11 @@ class IdcController extends ControllerBase {
             return $this->success('保存成功');
         }else{
             $this->end(false);
-            return $this->error('保存失败');
+            $msg = '';
+            foreach ($cabinet->getMessages() as $message) {
+                $msg .= $message;
+            }
+            return $this->error($msg);
         }
     }
     public function delete_cabinetAction($id = null){
