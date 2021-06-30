@@ -145,11 +145,13 @@ class OrderController extends ControllerBase {
     public function editAction($id=null){
         if($id){
             $order = \Orders::findFirst($id);
-            $this->view->order = $orderArray = $order->toDetailArray();
+            $this->view->order = $order;
+            $orderArray = $order->toDetailArray();
             $total = 0;
             foreach($orderArray['items'] as $item){
                 $total += $item['price'] * $item['month'] * $item['num'];
             }
+            $cabinet = \IdcCabinet::find();
             $this->view->normalTotal = $total;
             $this->view->title = '查看订单'.$order->id;
             $this->view->breadcrumb = [

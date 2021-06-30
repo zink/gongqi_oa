@@ -14,5 +14,6 @@ class IdcCabinetStock extends \BaseModel{
         $this->belongsTo("idc_id","Idc","id");
         $this->belongsTo("idc_cabinet_id","IdcCabinet","id");
         $this->hasMany("id","IdcCabinetSeat","idc_cabinet_stock_id");
+        $this->belongsTo("customer_id","Customer","id");
     }
 }

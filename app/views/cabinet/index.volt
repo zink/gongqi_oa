@@ -15,18 +15,15 @@
                 <div class="card-body p-0">
                     <table class="table table-striped">
                         <tr>
-                            <th>#</th>
                             <th>类型</th>
                             <th>所属机房</th>
                             <th>使用情况</th>
                             <th>客户</th>
+                            <th>创建时间</th>
                             <th>操作</th>
                         </tr>
                         {%for item in cabinet.items%}
                         <tr>
-                            <td>
-                                {{item.id}}
-                            </td>
                             <td>
                                 {{item.ampere}}
                             </td>
@@ -45,11 +42,14 @@
                             {%endif%}
                             </td>
                             <td>
-                            {{item.customer_id}}
+                            {{item.customer.subject}}
+                            </td>
+                            <td>
+                            {{date('Y-m-d H:i:s',item.create_time)}}
                             </td>
                             <td>
                             {%if item.customer_id != 0%}
-                                {{link_to('ip/unbind/'~ item.id,'释放','class':'btn btn-primary btn-xs','data-event':'unbind-ip')}}
+                                {{link_to('cabinet/unbind/'~ item.id,'释放','class':'btn btn-primary btn-xs','data-event':'unbind-cabinet')}}
                             {%endif%}
                             </td>
                         </tr>
@@ -57,7 +57,7 @@
                     </table>
                 </div>
                 <div class="card-footer clearfix">
-                    {{pagination(['last':ip.last])}}
+                    {{pagination(['last':cabinet.last])}}
                 </div>
             </div>
         </div>
@@ -65,11 +65,11 @@
 {{end_content_body()}}
 <script>
 (function(){
-    $('[data-event="delete-ip"]').on('click',function(e){
+    $('[data-event="unbind-cabinet"]').on('click',function(e){
         e.preventDefault();
         var $el = $(this);
         bootbox.confirm({
-            'message':"确定要删除该IP吗？",
+            'message':"确定要释放该机柜吗？",
             'buttons':{
                 confirm: {
                     label: '确定',

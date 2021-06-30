@@ -15,6 +15,9 @@ class Customer extends \BaseModel{
     public $remark;
     public function initialize(){
         parent::initialize();
+        $this->hasMany('id','IdcCabinetStock','customer_id',[
+                'alias'=>'cabinet',
+        ]);
         $this->hasMany('id','CustomerMember','customer_id',[
                 'columns'=>['member_id','status']
         ]);

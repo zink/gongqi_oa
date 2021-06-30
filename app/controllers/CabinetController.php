@@ -5,8 +5,7 @@ class CabinetController extends ControllerBase {
         $builder = $this->modelsManager
             ->createBuilder()
             ->columns("*")
-            ->from('IdcCabinetStock')
-            ->orderBy("create_time desc");
+            ->from('IdcCabinetStock');
 
         $paginator = new QueryBuilder([
             "builder" => $builder,
@@ -16,16 +15,19 @@ class CabinetController extends ControllerBase {
 
         $this->view->cabinet = $paginator->getPaginate();
     }
-    public function unbind($id){
+    public function unbindAction($id){
         if(!$id){
-            return $this->error('没有此IP');
+            return $this->error('没有此机柜');
         }
-        $ip = \IpPool::findFirst($id);
-        if(!$ip){
-            return $this->error('没有此IP');
+        $cabinet = \IdcCabinetStock::findFirst($id);
+        if(!$cabinet){
+            return $this->error('没有此机柜');
         }
-        $ip->customer_id = 0;
-        if($ip->save()){
+        $cabinet->customer_id = 0;
+        $cabinet->used = 'false';
+        $cabinet->name = '';
+        $cabinet->used_seat_num = 0;
+        if($cabinet->save()){
             return $this->success('释放成功');
         }else{
             return $this->error('释放失败');

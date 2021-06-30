@@ -67,6 +67,7 @@
                                 {{link_to('order/new_order/'~ item['id'],'建单','class':'btn btn-warning btn-xs')}}
                                 {%endif%}
                                 {{link_to('customer/edit/'~ item['id'],'编辑','class':'btn btn-primary btn-xs')}}
+                                {{link_to('customer/detail/'~ item['id'],'资源清单','class':'btn btn-default btn-xs')}}
                             </td>
                         </tr>
                         {% endfor %}

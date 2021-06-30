@@ -64,6 +64,23 @@ class CustomerController extends ControllerBase {
         }
         $this->view->customer = $customer;
     }
+    public function detailAction($id=null){
+        if($id){
+            $customer = \Customer::findFirst($id);
+            $this->view->cabinet = \IdcCabinetStock::find("customer_id=".$id);
+            $this->view->ip = \IpPool::find("customer_id=".$id);
+            $this->view->title = $title = $customer->subject."资源明细";
+            $this->view->breadcrumb = [
+                array(
+                    'name'=>'客户列表',
+                    'url'=>'customer'
+                ),
+                array(
+                    'name'=>$title
+                )
+            ];
+        }
+    }
     public function editAction($id=null){
         if($id){
             $customer = \Customer::findFirst($id);

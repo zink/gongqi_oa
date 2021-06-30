@@ -5,7 +5,7 @@
         </label>
         <div class="col-sm-6">
             <h2>
-                {{order['id']}}
+                {{order.id}}
             </h2>
         </div>
     </div>
@@ -15,8 +15,8 @@
         </label>
         <div class="col-sm-6">
             <upload-object 
-                url="{{url('order/contract/'~order['id'])}}"
-                image="{{order['contract']?url('order/attachment/'~order['id']~'?download=1'):''}}"
+                url="{{url('order/contract/'~order.id)}}"
+                image="{{order.contract?url('order/attachment/'~order.id~'?download=1'):''}}"
             ></upload-object>
         </div>
     </div>
@@ -26,7 +26,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {{date('Y-m-d',order['opening_time'])}}
+                {{date('Y-m-d',order.opening_time)}}
             </p>
         </div>
     </div>
@@ -36,7 +36,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {{date('Y-m-d',order['billing_time'])}}
+                {{date('Y-m-d',order.billing_time)}}
             </p>
         </div>
     </div>
@@ -46,7 +46,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {{date('Y-m-d',order['end_time'])}}
+                {{date('Y-m-d',order.end_time)}}
             </p>
         </div>
     </div>
@@ -56,7 +56,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {%switch order['bill_type']%}
+                {%switch order.bill_type%}
                     {%case 'month'%}
                         <span class="badge badge-info">月付</span>
                     {%break%}
@@ -79,7 +79,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {%switch order['status']%}
+                {%switch order.status%}
                 {%case 'doing'%}
                 <span class="badge badge-warning">上架中</span>
                 {%break%}
@@ -105,20 +105,20 @@
             </p>
         </div>
     </div>
-    {%if order['status'] == 'refuse'%}
+    {%if order.status == 'refuse'%}
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">
             驳回理由
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {{order['refuse_remark']}}
+                {{order.refuse_remark}}
             </p>
         </div>
     </div>
     {%endif%}
     {%if permission('order-review')%}
-    {%if order['status'] == 'pending'%}
+    {%if order.status == 'pending'%}
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">
             审核
@@ -162,7 +162,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {{order['commission_ratio'] * 100}}%
+                {{order.commission_ratio * 100}}%
             </p>
         </div>
     </div>
@@ -172,7 +172,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {{order['subject']}}
+                {{order.subject}}
             </p>
         </div>
     </div>
@@ -182,7 +182,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-                {{order['worker_name']}}
+                {{order.worker_name}}
             </p>
         </div>
     </div>
@@ -199,12 +199,12 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label">
             折后总价
-            <span class="badge badge-primary">{{round(order['total'] / normalTotal,2) * 100}}折</span>
+            <span class="badge badge-primary">{{round(order.total / normalTotal,2) * 100}}折</span>
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
                 <h2 class="text-red">
-                ￥{{order['total']}}
+                ￥{{order.total}}
                 </h2>
             </p>
         </div>
@@ -215,7 +215,7 @@
         </label>
         <div class="col-sm-6">
             <p class="form-control-plaintext">
-            {{order['remark']}}
+            {{order.remark}}
             </p>
         </div>
     </div>
@@ -236,38 +236,43 @@
                     <th>总价</th>
                     <th>实际总价</th>
                 </tr>
-                <tr v-for="item in orderItems">
+                {%for item in order.orderItem%}
+                <tr>
                     <td>
-                    <%item.idc_name%>
+                    {{item.idc_name}}
                     </td>
                     <td>
-                    <%item.product_name|productType%>
+                    {{product_type(item.product_name)}}
                     </td>
                     <td>
-                        <span v-if="item.status == 'finish'" class="badge badge-success">是</span>
-                        <span v-else class="badge badge-danger">否</span>
+                        {%if item.status == 'finish'%}
+                        <span class="badge badge-success">是</span>
+                        {%else%}
+                        <span class="badge badge-danger">否</span>
+                        {%endif%}
                     </td>
                     <td>
-                    <%item.price%>
+                    {{item.price}}
                     </td>
                     <td>
-                    <%item.final_price%>
+                    {{item.final_price}}
                     </td>
                     <td>
-                    <%item.num%>
+                    {{item.num}}
                     </td>
                     <td>
-                    <%item.month%>
+                    {{item.month}}
                     </td>
                     <td>
-                    ￥<%item.num * item.price * item.month%>
+                    ￥{{item.num * item.price * item.month}}
                     </td>
                     <td>
                         <span class="text-red">
-                            ￥<%item.num * item.final_price * item.month%>
+                            ￥{{item.num * item.final_price * item.month}}
                         </span>
                     </td>
                 </tr>
+                {%endfor%}
             </table>
         </div>
     </div>
@@ -280,111 +285,17 @@
         data:{
             'commissionRatio':0,
             'refuseRemark':'',
-            'orderItems':{{json_encode(order['items'])}},
-        },
-        filters:{
-            'productType':function(type){
-                switch(type){
-                    case 'bandwidth_bgp':
-                        return '带宽(bgp)';
-                    break;
-                    case 'bandwidth_unicom':
-                        return '带宽(联通)';
-                    break;
-                    case 'bandwidth_telecom':
-                        return '带宽(电信)';
-                    break;
-                    case 'bandwidth_mobile':
-                        return '带宽(移动)';
-                    break;
-                    case 'ampere':
-                        return '加电';
-                    break;
-                    case 'bridge':
-                        return '桥架';
-                    break;
-                    case 'bgp_ipv4':
-                      return 'BGP IPv4';
-                    break;
-                    case 'bgp_ipv6':
-                      return 'BGP IPv6';
-                    break;
-                    case 'unicom_ipv4':
-                      return '联通 IPv4';
-                    break;
-                    case 'unicom_ipv6':
-                      return '联通 IPv6';
-                    break;
-                    case 'telecom_ipv4':
-                      return '电信 IPv4';
-                    break;
-                    case 'telecom_ipv6':
-                      return '电信 IPv6';
-                    break;
-                    case 'mobile_ipv4':
-                      return '移动 IPv4';
-                    break;
-                    case 'mobile_ipv6':
-                      return '移动 IPv6';
-                    break;
-                    case '10A':
-                        return '10A整柜';
-                    break;
-                    case '16A':
-                        return '16A整柜';
-                    break;
-                    case '20A':
-                        return '20A整柜';
-                    break;
-                    case '25A':
-                        return '25A整柜';
-                    break;
-                    case '32A':
-                        return '32A整柜';
-                    break;
-                    case '45A':
-                        return '45A整柜';
-                    break;
-                    case '64A':
-                        return '64A整柜';
-                    break;
-                    case '10A_seat':
-                        return '10A散位';
-                    break;
-                    case '16A_seat':
-                        return '16A散位';
-                    break;
-                    case '20A_seat':
-                        return '20A散位';
-                    break;
-                    case '25A_seat':
-                        return '25A散位';
-                    break;
-                    case '32A_seat':
-                        return '32A散位';
-                    break;
-                    case '45A_seat':
-                        return '45A散位';
-                    break;
-                    case '64A_seat':
-                        return '64A散位';
-                    break;
-                    default:
-                        return '非法资源'
-                    break;
-                }
-            }
         },
         methods:{
             'review':function(pass){
                 var self = this;
                 if(pass){
-                    var url = "{{url('order/review/'~order['id'])}}/1";
+                    var url = "{{url('order/review/'~order.id)}}/1";
                     var data = {
                         'commission_ratio':self.commissionRatio / 100
                     };
                 }else{
-                    var url = "{{url('order/review/'~order['id'])}}/0";
+                    var url = "{{url('order/review/'~order.id)}}/0";
                     var data = {
                         'refuse_remark':self.refuseRemark
                     };

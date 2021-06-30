@@ -18,6 +18,98 @@ class FunctionExtension extends Component{
             return "call_user_func_array(array(new \\Component\\FunctionExtension() ,'$name') ,array($arguments))";
         }
     }
+    public function product_type($params = ''){
+        switch($params){
+            case 'bandwidth_bgp':
+                $product = '带宽(bgp)';
+            break;
+            case 'bandwidth_unicom':
+                $product = '带宽(联通)';
+            break;
+            case 'bandwidth_telecom':
+                $product = '带宽(电信)';
+            break;
+            case 'bandwidth_mobile':
+                $product = '带宽(移动)';
+            break;
+            case 'ampere':
+                $product = '加电';
+            break;
+            case 'bridge':
+                $product = '桥架';
+            break;
+            case 'bgp_ipv4':
+              $product = 'BGP IPv4';
+            break;
+            case 'bgp_ipv6':
+              $product = 'BGP IPv6';
+            break;
+            case 'unicom_ipv4':
+              $product = '联通 IPv4';
+            break;
+            case 'unicom_ipv6':
+              $product = '联通 IPv6';
+            break;
+            case 'telecom_ipv4':
+              $product = '电信 IPv4';
+            break;
+            case 'telecom_ipv6':
+              $product = '电信 IPv6';
+            break;
+            case 'mobile_ipv4':
+              $product = '移动 IPv4';
+            break;
+            case 'mobile_ipv6':
+              $product = '移动 IPv6';
+            break;
+            case '10A':
+                $product = '10A整柜';
+            break;
+            case '16A':
+                $product = '16A整柜';
+            break;
+            case '20A':
+                $product = '20A整柜';
+            break;
+            case '25A':
+                $product = '25A整柜';
+            break;
+            case '32A':
+                $product = '32A整柜';
+            break;
+            case '45A':
+                $product = '45A整柜';
+            break;
+            case '64A':
+                $product = '64A整柜';
+            break;
+            case '10A_seat':
+                $product = '10A散位';
+            break;
+            case '16A_seat':
+                $product = '16A散位';
+            break;
+            case '20A_seat':
+                $product = '20A散位';
+            break;
+            case '25A_seat':
+                $product = '25A散位';
+            break;
+            case '32A_seat':
+                $product = '32A散位';
+            break;
+            case '45A_seat':
+                $product = '45A散位';
+            break;
+            case '64A_seat':
+                $product = '64A散位';
+            break;
+            default:
+                $product = '非法资源';
+            break;
+        }
+        return $product;
+    }
     /*页面相关*/
     public function content_body($params = []){
         $params['class'] = 'content '.$params['class'];
