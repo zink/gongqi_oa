@@ -100,9 +100,9 @@ class Opportunity extends \AbstractClass\BaseApi{
         $opportunity->remark  = $this->requestFields['remark']?$this->requestFields['remark']:'';
         /*如果有地址需要进行地址校验*/
         if($this->requestFields['province']){
-            $opportunity->province = $checkReturn['province'];
-            $opportunity->city     = $checkReturn['city']?$checkReturn['city']:'';
-            $opportunity->district = $checkReturn['district']?$checkReturn['district']:'';
+            $opportunity->province = $this->requestFields['province'];
+            $opportunity->city     = $this->requestFields['city']?$this->requestFields['city']:'';
+            $opportunity->district = $this->requestFields['district']?$this->requestFields['district']:'';
             $opportunity->address = $this->requestFields['address']?$this->requestFields['address']:'';
         }
         if($this->requestFields['worker_id']){
@@ -144,13 +144,6 @@ class Opportunity extends \AbstractClass\BaseApi{
         if(!$opportunity){
             $this->rollbackTransaction();
             throw new \Exception('没有该销售机会');
-        }
-        /*如果有地址需要进行地址校验*/
-        if($this->requestFields['province']){
-            $opportunity->province = $checkReturn['province'];
-            $opportunity->city     = $checkReturn['city']?$checkReturn['city']:'';
-            $opportunity->district = $checkReturn['district']?$checkReturn['district']:'';
-            $opportunity->address = $this->requestFields['address']?$this->requestFields['address']:'';
         }
         foreach($this->requestFields as $key=>$value){
             if($key == 'worker_id'){
