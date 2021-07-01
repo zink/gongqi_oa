@@ -39,13 +39,13 @@
                             <td>
                                 {%switch item.status%}
                                 {%case 'doing'%}
-                                <span class="badge badge-danger">上架中</span>
+                                <span class="badge badge-warning">上架中</span>
                                 {%break%}
                                 {%case 'loading'%}
                                 <span class="badge badge-danger">待上架</span>
                                 {%break%}
                                 {%case 'part_loading'%}
-                                <span class="badge badge-warning">部分上架</span>
+                                <span class="badge badge-info">部分上架</span>
                                 {%break%}
                                 {%endswitch%}
                             </td>

@@ -68,8 +68,8 @@ class CustomerController extends ControllerBase {
         if($id){
             $customer = \Customer::findFirst($id);
             $this->view->cabinet = \IdcCabinetStock::find("customer_id=".$id);
-            $this->view->ip = \IpPool::find("customer_id=".$id);
-            $this->view->title = $title = $customer->subject."资源明细";
+            $this->view->ip = $ip = \IpPool::find("customer_id=".$id);
+            $this->view->title = $customer->subject."资源明细";
             $this->view->breadcrumb = [
                 array(
                     'name'=>'客户列表',
