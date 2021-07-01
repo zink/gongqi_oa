@@ -91,7 +91,7 @@
         el:'#J_order_bill_list',
         delimiters:['<%','%>'],
         data:{
-            bills:{{json_encode(order['bills'])}},
+            bills:{{json_encode(order_array['bills'])}},
             types:[
                 'png',
                 'gif',

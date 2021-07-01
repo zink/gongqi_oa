@@ -146,7 +146,7 @@ class OrderController extends ControllerBase {
         if($id){
             $order = \Orders::findFirst($id);
             $this->view->order = $order;
-            $orderArray = $order->toDetailArray();
+            $this->view->order_array = $orderArray = $order->toDetailArray();
             $total = 0;
             foreach($orderArray['items'] as $item){
                 $total += $item['price'] * $item['month'] * $item['num'];
