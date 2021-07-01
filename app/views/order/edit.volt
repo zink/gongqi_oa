@@ -19,9 +19,6 @@
             <div class="tab-pane active" id="J_order_basic">
                 {{partial('order/_basic')}}
             </div>
-            <div class="tab-pane" id="J_order_detail">
-                {{partial('order/_detail')}}
-            </div>
             <div class="tab-pane" id="J_order_bill">
                 {{partial('order/_bill')}}
             </div>
