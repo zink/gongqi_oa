@@ -151,7 +151,6 @@ class OrderController extends ControllerBase {
             foreach($orderArray['items'] as $item){
                 $total += $item['price'] * $item['month'] * $item['num'];
             }
-            $cabinet = \IdcCabinet::find();
             $this->view->normalTotal = $total;
             $this->view->title = '查看订单'.$order->id;
             $this->view->breadcrumb = [
